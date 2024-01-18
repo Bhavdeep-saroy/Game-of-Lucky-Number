@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body style="background-image: url('img/dsfggg.jpg');">
+<h1 style="text-align: center; "><i style="color:#EE1E4B ;">TRY YOUR LUCK </i></h1>
+<br>
+  <form id="myForm">
+    <h2  style="color: #ADB52E ;">Enter your Lucky Number</h2>
+    <input type="text" class="number-select" id="number" name="Number"><br>
+    <h3 style="color: #ADB52E ;" id="numberError"></h3>
+    
+    <button type="submit">Submit</button>
+  </form><br>
+
+<h2 id="reward-message" style="color: #ADB52E ;"></h2>
+
+
+  <div class="modal fade" id="photo-modal" tabindex="-1" role="dialog" aria-labelledby="photo-modal-label">
+    <div class="modal-dialog" role="document" >
+      <div class="modal-content"  style="background: radial-gradient(#000000a3, transparent);text-align: center;" ;="">
+        <div class="modal-body text-center">
+          <img src="img/luckydraw.gif" alt="Reward Photo">
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  
+
+<h3 id="hello" style="color:#ADB52E ;"></h3><br>
+<h3  id="result" style="color:#ADB52E ;"></h3>
+  
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $("#myForm").on("submit", function (e) {
+        e.preventDefault(); // Prevent the default form submission
+        $("#numberError").empty();
+        var number = $("#number").val().trim();
+
+        if (number == "") {
+          $("#numberError").html("Please enter your lucky number.");
+        } else if (isNaN(number)) {
+          $("#numberError").html("Please enter a number only.");
+        } else if (number.length > 3) {
+          $("#numberError").html("Please enter a maximum of 3 digits.");
+        } else if (number.length < 1) {
+          $("#numberError").html("Please enter a minimum of 1 digit.");
+        } else {
+          // Display the photo modal for 3 seconds
+          $("#photo-modal").modal("show");
+          setTimeout(function () {
+            $("#photo-modal").modal("hide");
+            displayRewardMessage();
+          }, 2000);
+        }
+
+        const rndInt = Math.floor(Math.random() * 1) + 1;
+        $("#hello").html(rndInt);
+      });
+    });
+
+    function displayRewardMessage() {
+      var selectNumber = parseInt($("#number").val());
+      var rndInt = parseInt($("#hello").html());
+
+      if (rndInt === selectNumber) {
+        $("#reward-message").html('Congratulations! You have won 100,000 rupees.<br><br><img src="img/Trip thailand and goa.png"style="margin-left: 378px;height: 500px;border-radius: 70px;"> ');
+      } else if (selectNumber <= 10) {
+        $("#reward-message").html('Congratulations! You have won 100 rupees.');
+      } else if (selectNumber <= 20) {
+        $("#reward-message").html('Congratulations! You have won 200 rupees.');
+      } else if (selectNumber <= 30) {
+        $("#reward-message").html('Congratulations! You have won 300 rupees.');
+      } else if (selectNumber <= 40) {
+        $("#reward-message").html('Congratulations! You have won 400 rupees.');
+      } else if (selectNumber <= 50) {
+        $("#reward-message").html('Congratulations! You have won 500 rupees.');
+      } else {
+        $("#reward-message").text("Sorry, no reward for this number.");
+      }
+    }
+  </script>
+</body>
+
+</html>
